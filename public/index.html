@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>GameDex - Catálogo de Videojuegos</title>
+</head>
+<body>
+    <header>
+        <div class="logo">GameDex</div>
+    </header>
+
+    <div class="mensajes" style="display: none;"></div>
+
+    <main class="container">
+        <div class="toolbar">
+            <button id="btn-abrir-agregar" class="btn-primary">+ Agregar Juego</button>
+            
+            <form id="form-buscar" class="search-form">
+                <input type="text" name="titulo" placeholder="Buscar por título...">
+                <input type="text" name="genero" placeholder="Buscar por género...">
+                <button type="submit" class="btn-secondary">Buscar</button>
+                <button type="button" id="btn-limpiar-filtros" class="btn-outline">Limpiar</button>
+            </form>
+        </div>
+
+        <section class="grid-juegos" id="listadoJuegos">
+            <!-- Cards generadas por JS -->
+        </section>
+    </main>
+
+    <!-- Modal Agregar -->
+    <div id="modal-agregar" class="modal">
+        <div class="modal-content">
+            <span class="btn-cerrar">&times;</span>
+            <h2>Agregar Nuevo Juego</h2>
+            <form id="form-agregar">
+                <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" name="titulo" required>
+                </div>
+                <div class="form-group">
+                    <label>Año de Lanzamiento</label>
+                    <input type="number" name="anio" required>
+                </div>
+                <div class="form-group">
+                    <label>Género</label>
+                    <input type="text" name="genero" required>
+                </div>
+                <div class="form-group">
+                    <label>Imagen (Carátula)</label>
+                    <input type="file" name="imagenFile" accept="image/*" required>
+                </div>
+                <button type="submit" class="btn-primary w-100">Guardar Juego</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Modificar -->
+    <div id="modal-modificar" class="modal">
+        <div class="modal-content">
+            <span class="btn-cerrar">&times;</span>
+            <h2>Modificar Juego</h2>
+            <form id="form-modificar">
+                <input type="hidden" name="idJuego">
+                <input type="hidden" name="imagenActual">
+                <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" name="titulo" required>
+                </div>
+                <div class="form-group">
+                    <label>Año de Lanzamiento</label>
+                    <input type="number" name="anio" required>
+                </div>
+                <div class="form-group">
+                    <label>Género</label>
+                    <input type="text" name="genero" required>
+                </div>
+                <div class="form-group">
+                    <label>Nueva Imagen (Opcional)</label>
+                    <input type="file" name="imagenFile" accept="image/*">
+                </div>
+                <button type="submit" class="btn-primary w-100">Actualizar Juego</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>Catálogo de Videojuegos - Integración MockAPI + ImgBB</p>
+    </footer>
+
+    <script src="js/mostrarMensajes.js"></script>
+    <script src="js/modulos.js"></script>
+    <script src="js/eventos.js"></script>
+</body>
+</html>
