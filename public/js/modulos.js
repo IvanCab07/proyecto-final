@@ -1,5 +1,34 @@
-const URL_API = '/personas';
-const API_KEY_IMGBB = '385c7634aedac86d2eb5819ab58fc146';
+// URL base del backend desplegado en Render
+const RENDER_URL = 'https://proyecto-final-8j4x.onrender.com';
+
+// Determina automáticamente la URL base según cómo se ejecute el frontend:
+// - Si se ejecuta desde el backend de Node local (http://localhost:3000), usa '' (rutas relativas locales).
+// - Si se ejecuta desde el mismo dominio de Render (https://proyecto-final-8j4x.onrender.com), usa '' (rutas relativas al mismo servidor).
+// - Si se abre con Live Server (puertos 5500, 5501, etc.), archivo local (file://) o GitHub Pages, usa la URL de Render.
+const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port === '3000'
+    ? ''
+    : (window.location.origin.includes('onrender.com') ? '' : RENDER_URL);
+
+const URL_API = `${API_BASE}/personas`;
+let API_KEY_IMGBB = '385c7634aedac86d2eb5819ab58fc146';
+
+// Cargar configuración pública desde el servidor (.env)
+async function obtenerApiKeyImgBB() {
+    try {
+        const res = await fetch(`${API_BASE}/api/config`);
+        if (res.ok) {
+            const config = await res.json();
+            if (config.imgbbApiKey) {
+                API_KEY_IMGBB = config.imgbbApiKey;
+            }
+        }
+    } catch {
+        // En caso de error, utiliza el valor por defecto
+    }
+    return API_KEY_IMGBB;
+}
+
+obtenerApiKeyImgBB();
 
 async function subirImagen(file) {
     const formdata = new FormData();
@@ -7,7 +36,8 @@ async function subirImagen(file) {
 
     mostrarMensaje("Subiendo imagen...", "info");
     try {
-        const response = await fetch(`https://api.imgbb.com/1/upload?key=${API_KEY_IMGBB}`, {
+        const apiKey = await obtenerApiKeyImgBB();
+        const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
             method: 'POST',
             body: formdata
         });
@@ -142,8 +172,12 @@ async function eliminarJuego(id) {
 
 async function buscarJuegos(titulo, genero) {
     try {
-        const url = new URL(`${URL_API}/buscar`);
-        const res = await fetch(url);
+        const params = new URLSearchParams();
+        if (titulo && titulo.trim()) params.append('titulo', titulo.trim());
+        if (genero && genero.trim()) params.append('genero', genero.trim());
+
+        const queryString = params.toString() ? `?${params.toString()}` : '';
+        const res = await fetch(`${URL_API}/buscar${queryString}`);
         if (!res.ok) throw new Error('Error al buscar juegos');
 
         const juegos = await res.json();

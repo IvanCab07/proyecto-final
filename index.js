@@ -1,12 +1,21 @@
+import 'dotenv/config';
 import express from 'express';
+import cors from 'cors';
 import pool from './config/conexion.js';
-import 'dotenv/config'
 
 const app = express();
-const port = process.env.port || 3000;
+const port = process.env.PORT || process.env.port || 3000;
 
+app.use(cors());
 app.use(express.static('public'));
 app.use(express.json());
+
+// Endpoint para proveer variables de entorno públicas al cliente
+app.get('/api/config', (req, res) => {
+    res.json({
+        imgbbApiKey: process.env.IMGBB_API_KEY || ''
+    });
+});
 
 app.get('/', (req, res) => {
     res.send('ejemplo de api rest mysql');
