@@ -10,7 +10,6 @@ app.use(cors());
 app.use(express.static('public'));
 app.use(express.json());
 
-// Endpoint para proveer variables de entorno públicas al cliente
 app.get('/api/config', (req, res) => {
     res.json({
         imgbbApiKey: process.env.IMGBB_API_KEY || ''

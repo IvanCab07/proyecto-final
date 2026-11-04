@@ -16,21 +16,19 @@
     <main class="container">
         <div class="toolbar">
             <button id="btn-abrir-agregar" class="btn-primary">+ Agregar Juego</button>
-            
             <form id="form-buscar" class="search-form">
                 <input type="text" name="titulo" placeholder="Buscar por título...">
                 <input type="text" name="genero" placeholder="Buscar por género...">
-                <button type="submit" class="btn-secondary">Buscar</button>
-                <button type="button" id="btn-limpiar-filtros" class="btn-outline">Limpiar</button>
+                <div class="search-actions">
+                    <button type="submit" class="btn-secondary">Buscar</button>
+                    <button type="button" id="btn-limpiar-filtros" class="btn-outline">Limpiar</button>
+                </div>
             </form>
         </div>
 
-        <section class="grid-juegos" id="listadoJuegos">
-            <!-- Cards generadas por JS -->
-        </section>
+        <section class="grid-juegos" id="listadoJuegos"></section>
     </main>
 
-    <!-- Modal Agregar -->
     <div id="modal-agregar" class="modal">
         <div class="modal-content">
             <span class="btn-cerrar">&times;</span>
@@ -57,7 +55,6 @@
         </div>
     </div>
 
-    <!-- Modal Modificar -->
     <div id="modal-modificar" class="modal">
         <div class="modal-content">
             <span class="btn-cerrar">&times;</span>
@@ -87,7 +84,7 @@
     </div>
 
     <footer>
-        <p>Catálogo de Videojuegos - Integración MockAPI + ImgBB</p>
+        <p>GameDex - Catálogo de Videojuegos</p>
     </footer>
 
     <script src="js/mostrarMensajes.js"></script>
